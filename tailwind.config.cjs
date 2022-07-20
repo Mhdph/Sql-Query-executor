@@ -13,6 +13,9 @@ module.exports = {
           default: "var(--color-background-default)",
         },
       },
+      backgroundImage: {
+        "logo-pattern": "url('https://i.ibb.co/F558zK6/Untitled.jpg')",
+      },
     },
   },
   plugins: [],

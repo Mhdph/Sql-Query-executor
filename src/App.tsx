@@ -8,20 +8,18 @@ import Queries from "./pages/Queries";
 import Register from "./pages/Register";
 
 function App() {
+  const user = true;
+
   return (
     <div>
       <BrowserRouter>
-        <Header />
-        <div className="flex">
-          <Sidebar />
-          <Routes>
-            <Route path="/" element={<Connections />} />
-            <Route path="/queries" element={<Queries />} />
-            <Route path="/forms" element={<Forms />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        </div>
+        <Routes>
+          <Route path="/" element={user ? <Login /> : <Connections />} />
+          <Route path="/queries" element={<Queries />} />
+          <Route path="/forms" element={<Forms />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
