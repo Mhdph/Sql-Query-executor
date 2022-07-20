@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
 import Connections from "./pages/Connections";
 import Forms from "./pages/Forms";
 import Login from "./pages/Login";
@@ -8,7 +6,7 @@ import Queries from "./pages/Queries";
 import Register from "./pages/Register";
 
 function App() {
-  const user = true;
+  const user = false;
 
   return (
     <div>
