@@ -1,11 +1,33 @@
-import React from "react";
+import axios from "axios";
+import React, { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
 type RegisterProps = {};
 
 const Register: React.FC<RegisterProps> = () => {
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [copassword, setCoPassword] = useState("");
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post("http://172.16.1.63:8080/api/register", {
+        firstname,
+        lastname,
+        email,
+        password,
+        copassword,
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <div className="bg-[#F3F7F9] min-h-screen flex flex-col">
         <div className="container max-w-md rounded mx-auto flex-1 flex flex-col items-center justify-center px-2">
           <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
@@ -14,14 +36,22 @@ const Register: React.FC<RegisterProps> = () => {
               type="text"
               className="block border border-gray-100 w-full p-3 rounded mb-4"
               name="fullname"
-              placeholder="Full Name"
+              placeholder="First Name"
+              onChange={(e) => setFirstName(e.target.value)}
             />
-
+            <input
+              type="text"
+              className="block border border-gray-100 w-full p-3 rounded mb-4"
+              name="fullname"
+              placeholder="Last Name"
+              onChange={(e) => setLastName(e.target.value)}
+            />
             <input
               type="text"
               className="block border border-gray-100 w-full p-3 rounded mb-4"
               name="email"
               placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <input
@@ -29,12 +59,14 @@ const Register: React.FC<RegisterProps> = () => {
               className="block border border-gray-100 w-full p-3 rounded mb-4"
               name="password"
               placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <input
               type="password"
               className="block border border-gray-100 w-full p-3 rounded mb-4"
               name="confirm_password"
               placeholder="Confirm Password"
+              onChange={(e) => setCoPassword(e.target.value)}
             />
 
             <button
@@ -74,7 +106,7 @@ const Register: React.FC<RegisterProps> = () => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 export default Register;
