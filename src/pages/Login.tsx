@@ -1,9 +1,36 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import axios from "axios";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { loginFailure, loginStart, loginSuccess } from "../app/userSlice";
 
 type LoginProps = {};
 
 const Login: React.FC<LoginProps> = () => {
+  const [email, setemail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const theme = useSelector((state: any) => state.theme.theme);
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    try {
+      dispatch(loginStart());
+      const res = await axios.post(`http://172.16.1.75:8080/api/login`, {
+        email: email,
+        password: password,
+      });
+      dispatch(loginSuccess(res.data));
+      navigate("/");
+      localStorage.setItem("token", res.data.token);
+    } catch (err) {
+      dispatch(loginFailure());
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <div className="bg-gray-100 ">
@@ -27,6 +54,7 @@ const Login: React.FC<LoginProps> = () => {
                       Email Address
                     </label>
                     <input
+                      onChange={(e) => setemail(e.target.value)}
                       type="email"
                       name="email"
                       id="email"
@@ -47,6 +75,7 @@ const Login: React.FC<LoginProps> = () => {
                     </div>
 
                     <input
+                      onChange={(e) => setPassword(e.target.value)}
                       type="password"
                       name="password"
                       id="password"
@@ -56,7 +85,10 @@ const Login: React.FC<LoginProps> = () => {
                   </div>
 
                   <div className="mt-6">
-                    <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                    <button
+                      onClick={handleLogin}
+                      className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                    >
                       Sign in
                     </button>
                   </div>

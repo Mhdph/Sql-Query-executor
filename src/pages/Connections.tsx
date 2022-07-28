@@ -7,7 +7,7 @@ import Loading from "../components/Loading";
 import NotFound from "../components/NotFound";
 import Sidebar from "../components/Sidebar";
 
-interface Item {
+export interface Item {
   connection_name: string;
   host: string;
   database_name: string;
